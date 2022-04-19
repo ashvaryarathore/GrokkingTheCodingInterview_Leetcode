@@ -5,3 +5,35 @@ Smallest Subarray With a Greater Sum (easy)
 Key terms to remember: 
 - (windowEnd >= K - 1)
 - K contiguous. 
+
+
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) 
+    {
+        int windowSize = 2;
+        int windowSum = nums[0]; 
+        int answer = 0; 
+        int windowStart = 0; 
+        
+        for(int windowEnd = 1; windowEnd < nums.size(); windowEnd++)
+        {
+            windowSum += nums[windowEnd];
+            
+            if(windowEnd >= (windowSize-1))
+            {
+                answer = max(answer, windowSum);
+                windowSum -= nums[windowStart];
+                windowStart++;
+            }
+        }
+        
+        return answer;
+    }
+};
+
+
+LeetCode Question Solution: 
+
+- We can convert the above code to be of flexible window size. 
+-
