@@ -1,3 +1,51 @@
 
 Fruits into Baskets (medium)
 Leetcode Link: https://leetcode.com/problems/fruit-into-baskets/
+
+Solution Link: https://leetcode.com/problems/fruit-into-baskets/discuss/1962508/C%2B%2B-Solution-or-Sliding-Window-Approach-or-Time-Complexity-Explained
+
+This quesiton uses the technique/concept used in Longest Substring with maximum K Distinct Characters (medium), where K = 2 for this scenario. 
+
+Leetcode Link: https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/
+
+```
+class Solution {
+public:
+    int totalFruit(vector<int>& s) 
+    {
+        int k = 2;
+        map<int, int> myMap; 
+        int windowStart = 0; 
+        int answer = 0; 
+       
+        for(int windowEnd = 0; windowEnd < s.size(); windowEnd++)
+        {
+            //insert into the map regardless.
+            //if already exists wil increase the count
+            myMap[s[windowEnd]]++; 
+            
+            //window size determining condition
+            while(myMap.size() > k)
+            {
+                //we will try to shrink  the window. 
+                myMap[s[windowStart]]--; 
+                
+                if(myMap[s[windowStart]] == 0)
+                {
+                    myMap.erase(s[windowStart]);
+                }
+                windowStart++; 
+            }
+            answer = max(answer, (windowEnd - windowStart + 1));
+        }
+        return answer;
+    }
+};
+
+```
+Time Complexity = The time complexity of the above algorithm will be O(N)
+
+Explanation:
+The outer for loop runs for all elements - O(N)
+The inner while loop will process each element only once, thus O(N).
+So the total time complexity of the algorithm will be O(N+N), which is equal to O(N).
