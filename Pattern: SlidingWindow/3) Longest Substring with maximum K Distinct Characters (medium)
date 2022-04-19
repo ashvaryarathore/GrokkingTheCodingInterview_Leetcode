@@ -1,3 +1,62 @@
 Longest Substring with maximum K Distinct Characters (medium)
 <br/>
 Leetcode Link: https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/
+
+Solution Link: https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/discuss/1962430/C%2B%2B-Sliding-Window-or-Time-Complexity-Explained
+
+class Solution {
+public:
+    int lengthOfLongestSubstringKDistinct(string s, int k) 
+    {
+        //we need to keep a map of the unique alphabets encounterd. 
+        //The if condition here will be, if the number of encountered unique characters is > k
+        //If yes, we will try to shrink our window to decrease the unique count 
+        
+        map<char, int> myMap; 
+        int windowStart = 0; 
+        int uniqueCount = 0; 
+        int answer = 0; 
+        map<char,int>::iterator it;
+        
+        for(int windowEnd = 0; windowEnd < s.length(); windowEnd++)
+        {
+            if(myMap.count(s[windowEnd]) == 0)
+            {
+                //encountered unique element
+                uniqueCount++;
+            }
+            
+            //insert into the map regardless.
+            //if already exists wil increase the count
+            myMap[s[windowEnd]]++; 
+            
+            //window size determining condition
+            while(uniqueCount > k)
+            {
+                //we will try to shrink the window. 
+                it = myMap.find(s[windowStart]);
+                if(it->second > 1)
+                {
+                    it->second -= 1;
+                }
+                else
+                {
+                    myMap.erase(s[windowStart]);
+                    //since removed from the map, unique count can be decreased.
+                    uniqueCount--; 
+                }
+                
+                windowStart++; 
+            }
+            
+            answer = max(answer, (windowEnd - windowStart + 1));
+        }
+        return answer;
+    }
+};
+Time Complexity = The time complexity of the above algorithm will be O(N)
+
+Explanation:
+The outer for loop runs for all elements - O(N)
+The inner while loop will process each element only once, thus O(N).
+So the total time complexity of the algorithm will be O(N+N), which is equal to O(N).
