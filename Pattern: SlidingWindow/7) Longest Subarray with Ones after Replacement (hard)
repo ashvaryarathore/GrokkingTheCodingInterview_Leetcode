@@ -1,2 +1,54 @@
 Longest Subarray with Ones after Replacement (hard)
 Leetcode Link: https://leetcode.com/problems/max-consecutive-ones-iii/
+Solution Link: https://leetcode.com/problems/max-consecutive-ones-iii/discuss/1964669/C%2B%2B-or-Sliding-Window-Approach-or-Time-Complexity-Explained
+
+This question is using the concepts of Longest Substring with Same Letters after Replacement 
+Leetcode Link: https://leetcode.com/problems/longest-repeating-character-replacement/
+Solutution Link: https://leetcode.com/problems/longest-repeating-character-replacement/discuss/1964550/C%2B%2B-or-Sliding-Window-Approach-or-Time-Complexity-Explained
+
+We can use the same concept but making our repeating chars as repeating 1's. 
+
+```
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) 
+    {
+        int windowStart = 0; 
+        int oneFrequency = 0; 
+        int maxRepeatCount = 0; 
+        int answer = 0; 
+        
+        for(int windowEnd = 0; windowEnd < nums.size(); windowEnd++)
+        {
+            //we need to check if the current value is 0
+            if(nums[windowEnd] == 1)
+            {
+                //increase freq
+                oneFrequency++; 
+            }
+            
+            //check if the max limit for replacing zero is reached.
+            if((windowEnd - windowStart + 1 - oneFrequency) > k)
+            {
+                //we found more zeros than we can replace. 
+                //need to move window 
+                //keep moving window until next one is found.
+                if(nums[windowStart] == 1)
+                {
+                    //increase freq
+                    oneFrequency--; 
+                }
+                windowStart++ ;
+            }
+                
+            answer = max(answer,(windowEnd - windowStart + 1));
+        }
+        
+        return answer;
+    }
+};
+```
+
+Time Complexity: The time complexity will be O(N), where ‘N’ represents the number of letters in the input string.
+
+
