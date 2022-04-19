@@ -1,2 +1,34 @@
 Longest Substring with Distinct Characters (hard)
 Leetcode Link: https://leetcode.com/problems/longest-substring-without-repeating-characters/
+
+Solution Link: https://leetcode.com/problems/longest-substring-without-repeating-characters/discuss/1964061/C%2B%2B-Solution-or-Sliding-Window-Approach-or-Time-Complexity-Explained
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) 
+    {
+        int windowStart = 0; 
+        int answer = 0; 
+        map<char, int> myMap;
+        
+        for(int windowEnd = 0; windowEnd < s.length(); windowEnd++)
+        {
+            if(myMap.find(s[windowEnd])!= myMap.end())
+            {
+                //we found a duplicate
+                //we need to shift the window start to point to next location of the same element 
+				//This will reduce the duplicacy for this element
+				//We also need to make sure, in the process, we don't go behind the current windowStart
+				//The next windowStart should be always > current window start
+                windowStart = max(windowStart, (myMap[s[windowEnd]] + 1)); 
+            }
+            
+            answer = max(answer, (windowEnd - windowStart + 1)); 
+            myMap[s[windowEnd]] = windowEnd;             
+
+        }
+        
+        return answer;
+    }
+};
+Time Complexity: The time complexity will be O(N), where ‘N’ represents the number of letters in the input string.
