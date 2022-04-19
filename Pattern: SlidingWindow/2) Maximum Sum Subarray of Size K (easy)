@@ -1,6 +1,7 @@
 LeetcodeLink: https://leetcode.com/problems/maximum-subarray/
 
-Solution: 
+Solution Link: https://leetcode.com/problems/maximum-subarray/discuss/1962293/C%2B%2B-Solution-Sliding-Window-Approach
+
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) 
