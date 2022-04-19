@@ -1,39 +1,37 @@
 Smallest Subarray With a Greater Sum (easy)
 [Leetcode Link]: https://leetcode.com/problems/minimum-size-subarray-sum/
 
-
-Key terms to remember: 
-- (windowEnd >= K - 1)
-- K contiguous. 
-
+Solution Link: https://leetcode.com/problems/minimum-size-subarray-sum/discuss/1962378/C%2B%2B-Sliding-Window-Approach-or-Time-Complexity-Explained
 
 class Solution {
 public:
     int minSubArrayLen(int target, vector<int>& nums) 
     {
-        int windowSize = 2;
-        int windowSum = nums[0]; 
-        int answer = 0; 
+        int windowSum = 0; 
+        int answer = INT_MAX;  
         int windowStart = 0; 
         
-        for(int windowEnd = 1; windowEnd < nums.size(); windowEnd++)
+        for(int windowEnd = 0; windowEnd < nums.size(); windowEnd++)
         {
-            windowSum += nums[windowEnd];
+            windowSum += nums[windowEnd]; 
             
-            if(windowEnd >= (windowSize-1))
+            //if we exeed the target, we can try shrinking our window. 
+            while(windowSum >= target)
             {
-                answer = max(answer, windowSum);
+                answer = min(answer, (windowEnd - windowStart + 1)); 
                 windowSum -= nums[windowStart];
                 windowStart++;
             }
         }
         
-        return answer;
+        //If a possible solution does not exist, return 0
+        return answer == INT_MAX ? 0 : answer;
     }
 };
 
+Time Complexity = The time complexity of the above algorithm will be O(N)
 
-LeetCode Question Solution: 
-
-- We can convert the above code to be of flexible window size. 
--
+Explanation:
+The outer for loop runs for all elements - O(N)
+The inner while loop will process each element only once, thus O(N).
+So the total time complexity of the algorithm will be O(N+N), which is equal to O(N).
