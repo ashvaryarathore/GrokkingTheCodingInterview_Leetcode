@@ -1,5 +1,6 @@
 Permutation in a String (hard)
 Leetcode Link: https://leetcode.com/problems/permutation-in-string/
+Solution Link: https://leetcode.com/problems/permutation-in-string/discuss/1979881/C%2B%2B-or-Sliding-Window-Approach
 
 class Solution {
 public:
