@@ -1,2 +1,51 @@
 String Anagrams (hard)
 Leetcode Link: https://leetcode.com/problems/find-all-anagrams-in-a-string/
+Solution Link: https://leetcode.com/problems/find-all-anagrams-in-a-string/discuss/1979910/C%2B%2B-oror-Sliding-Window-Approach-oror-Similar-to-Permutation-in-String
+
+This problem is very similar to the Permutation in String, problem
+Leetcode Link: https://leetcode.com/problems/permutation-in-string/
+Solution Link: https://leetcode.com/problems/permutation-in-string/discuss/1979881/C%2B%2B-or-Sliding-Window-Approach
+
+Referencing, the solution to Permutation in String, you only need to change the break condition and keep storing the indexes of matched permutations.
+
+class Solution {
+public:
+    vector<int> findAnagrams(string s2, string s1) 
+    {
+    
+        vector<int> s2Frequencies(26,0); 
+        vector<int> s1Frequencies(26,0);
+        vector<int> answer; 
+        
+        int windowStart =0;
+        
+        //code to add all the s1 frequencies in vector
+		//Using char - a, is essentially using the ASCII value to access the 26 alphabets in the vector
+        for(int i = 0; i<s1.length(); i++)
+        {
+            s1Frequencies[s1[i] - 'a']++;
+        }
+        
+        //code to check if s2 contains permutation of s1
+        for(int windowEnd = 0; windowEnd < s2.length(); windowEnd++)
+        {
+            s2Frequencies[s2[windowEnd] - 'a']++;
+                        
+            //check window size 
+            if((windowEnd - windowStart + 1) == s1.length())
+            {
+                //check permutation
+                if(s1Frequencies == s2Frequencies)
+                {
+                    //found 
+                    answer.push_back(windowStart); 
+                }
+                
+                s2Frequencies[s2[windowStart] - 'a']--;
+                windowStart++;
+            }
+        }
+        
+        return answer;
+    }
+};
