@@ -1,2 +1,47 @@
 Permutation in a String (hard)
 Leetcode Link: https://leetcode.com/problems/permutation-in-string/
+
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) 
+    {
+        vector<int> s2Frequencies(26,0); 
+        vector<int> s1Frequencies(26,0);
+        
+        int windowStart =0;
+        bool answer = false; 
+        
+        //code to add all the s1 chars in map
+        for(int i = 0; i<s1.length(); i++)
+        {
+            cout<<"\n value : "<<s1[i];
+            s1Frequencies[s1[i] - 'a']++;
+        }
+        
+        //code to check if s2 contains permutation of s1
+        for(int windowEnd = 0; windowEnd < s2.length(); windowEnd++)
+        {
+            s2Frequencies[s2[windowEnd] - 'a']++;
+            
+            cout<<" \n window size ="<< (windowEnd - windowStart + 1)<<" s1 lenght = "<< s1.length();
+            
+            //check window size 
+            if((windowEnd - windowStart + 1) == s1.length())
+            {
+                //check permutation
+                if(s1Frequencies == s2Frequencies)
+                {
+                    //found 
+                    answer = true; 
+                    break;
+                }
+                
+                s2Frequencies[s2[windowStart] - 'a']--;
+                windowStart++;
+            }
+        }
+        
+        return answer;
+        
+    }
+};
